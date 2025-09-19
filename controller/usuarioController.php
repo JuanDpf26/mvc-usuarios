@@ -16,12 +16,14 @@ if (isset($_POST['accion']) && $_POST['accion'] === 'crear') {
 
 // Actualizar usuario
 if (isset($_POST['accion']) && $_POST['accion'] === 'editar') {
-    $id = $_POST['id'];
+    $id = intval($_POST['id']);
     $nombre = $_POST['nombre'];
-    $model->actualizar($id, $nombre);
+    $password = !empty($_POST['password']) ? $_POST['password'] : null;
+    $model->actualizar($id, $nombre, $password);
     header("Location: ../view/lista.php");
     exit;
 }
+
 
 // Eliminar usuario
 if (isset($_GET['accion']) && $_GET['accion'] === 'eliminar') {

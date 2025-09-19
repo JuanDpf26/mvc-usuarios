@@ -26,9 +26,14 @@ class UsuarioModel {
         return $stmt->get_result()->fetch_assoc();
     }
 
-    public function actualizar($id, $nombre) {
-        $stmt = $this->db->prepare("UPDATE usuarios SET nombre=? WHERE id=?");
-        $stmt->bind_param("si", $nombre, $id);
+    public function actualizar($id, $nombre, $password = null) {
+        if (!empty($password)) {
+            $stmt = $this->db->prepare("UPDATE usuarios SET nombre=?, password=? WHERE id=?");
+            $stmt->bind_param("ssi", $nombre, $password, $id);
+        } else {
+            $stmt = $this->db->prepare("UPDATE usuarios SET nombre=? WHERE id=?");
+            $stmt->bind_param("si", $nombre, $id);
+        }
         return $stmt->execute();
     }
 
